@@ -39,7 +39,7 @@ async def kitsune(ctx, network, username):
         if req.status_code == 200:
             await bot.say("@{} is unavailable.".format(username))
         elif req.status_code == 404:
-            await bot.say("@{} is Available.".format(username))
+            await bot.say("@{} is available.".format(username))
         else:
             await bot.say("Error! *{}*".format(req.status_code))
     else:
