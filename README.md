@@ -15,7 +15,7 @@ A Python Instagram username scraper. Originally created by 4201337, updated to r
 6. `cd` to the directory you installed Kitsune to
 7. run `python3 KitsuneDiscord.py`
 
-KitsuneDiscord supports both Instagram, and Twitter usernames.
+KitsuneDiscord currently supports both Instagram, and Twitter usernames.
 
 To use KitsuneDiscord, enter `%kitsune SocialMediaName Username`, with `SocialMediaName` being either `Instagram`, or `Twitter`, and `Username` being the username you wish to check.
 
