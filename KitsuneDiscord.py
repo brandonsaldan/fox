@@ -43,6 +43,6 @@ async def kitsune(ctx, network, username):
         else:
             await bot.say("Error! *{}*".format(req.status_code))
     else:
-        await bot.say("Sorry that social network is not supported.")
+        await bot.say("Sorry, that social media is currently not supported.")
 
 bot.run('insert bot token here')
