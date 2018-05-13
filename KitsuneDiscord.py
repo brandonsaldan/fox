@@ -54,6 +54,21 @@ async def kitsune(ctx, network, username):
             await bot.say(embed=embed)
         else:
             await bot.say("Error! *{}*".format(req.status_code))
+    elif network == "youtube":
+        url = 'https://www.youtube.com/'
+        req = requests.get(url + username)
+        if req.status_code == 200:
+            embed = discord.Embed(title="YouTube Request", color=0xff0000)
+            embed.add_field(name="Username", value="{}".format(username))
+            embed.add_field(name="Status", value="Not Available")
+            await bot.say(embed=embed)
+        elif req.status_code == 404:
+            embed = discord.Embed(title="YouTube Request", color=0xff0000)
+            embed.add_field(name="Username", value="{}".format(username))
+            embed.add_field(name="Status", value="Available")
+            await bot.say(embed=embed)
+        else:
+            await bot.say("Error! *{}*".format(req.status_code))
     else:
         await bot.say("Sorry, that social media is currently not supported.")
 
