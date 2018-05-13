@@ -11,7 +11,7 @@ A social media username scraper made for use as a Discord bot.
 4. Get bot token from Discord
 5. Replace bot.run with your token
 6. `cd` to the directory you installed Kitsune to
-7. run `python3 KitsuneDiscord.py`
+7. run `python KitsuneDiscord.py`
 
 **Usage**
 --------------
