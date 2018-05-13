@@ -28,18 +28,30 @@ async def kitsune(ctx, network, username):
         print("command recieved.")
         req = requests.get(url + username)
         if req.status_code == 200:
-            await bot.say("@{} is unavailable.".format(username))
+            embed = discord.Embed(title="Twitter Request", color=0x00aced)
+            embed.add_field(name="Username", value="{}".format(username))
+            embed.add_field(name="Status", value="Not Available")
+            await bot.say(embed=embed)
         elif req.status_code == 404:
-            await bot.say("@{} is Available.".format(username))
+            embed = discord.Embed(title="Twitter Request", color=0x00aced)
+            embed.add_field(name="Username", value="{}".format(username))
+            embed.add_field(name="Status", value="Available")
+            await bot.say(embed=embed)
         else:
             await bot.say("Error! *{}*".format(req.status_code))
     elif network == "instagram":
         url = 'https://www.instagram.com/'
         req = requests.get(url + username)
         if req.status_code == 200:
-            await bot.say("@{} is unavailable.".format(username))
+            embed = discord.Embed(title="Instagram Request", color=0xbc2a8d)
+            embed.add_field(name="Username", value="{}".format(username))
+            embed.add_field(name="Status", value="Not Available")
+            await bot.say(embed=embed)
         elif req.status_code == 404:
-            await bot.say("@{} is available.".format(username))
+            embed = discord.Embed(title="Instagram Request", color=0xbc2a8d)
+            embed.add_field(name="Username", value="{}".format(username))
+            embed.add_field(name="Status", value="Available")
+            await bot.say(embed=embed)
         else:
             await bot.say("Error! *{}*".format(req.status_code))
     else:
