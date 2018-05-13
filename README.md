@@ -1,6 +1,6 @@
 # KitsuneDiscord
 
-A Python social media username scraper.
+A social media username scraper made for use as a Discord bot.
 
 **Installation on Windows and macOS**
 --------------
