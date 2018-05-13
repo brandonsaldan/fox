@@ -15,6 +15,8 @@ import urllib.request
 
 bot = commands.Bot(command_prefix='%')
 
+social_networks = {"instagram": "https://www.instagram.com/", "twitter": "https://www.twitter.com/", "youtube": "https://www.youtube.com/", "reddit": "https://www.reddit.com/user/"}
+social_network_prefix = {"instagram": "@", "twitter": "@", "youtube": " ", "reddit": "/u/"}
 
 
 @bot.event
@@ -23,54 +25,18 @@ async def on_ready():
 
 @bot.command(pass_context=True)
 async def kitsune(ctx, network, username):
-    if network == "twitter":
-        url = 'https://www.twitter.com/'
-        print("command recieved.")
-        req = requests.get(url + username)
+    try:
+        social_url = social_networks[network]
+        req = requests.get(social_url + username, headers = {'User-agent': 'Kitsune username checker'})
+        username_prefix = social_network_prefix[network]
         if req.status_code == 200:
-            embed = discord.Embed(title="Twitter Request", color=0x00aced)
-            embed.add_field(name="Username", value="{}".format(username))
-            embed.add_field(name="Status", value="Not Available")
-            await bot.say(embed=embed)
+            await bot.say("{}{} is unavailable.".format(username_prefix, username))
         elif req.status_code == 404:
-            embed = discord.Embed(title="Twitter Request", color=0x00aced)
-            embed.add_field(name="Username", value="{}".format(username))
-            embed.add_field(name="Status", value="Available")
-            await bot.say(embed=embed)
+            await bot.say("{}{} is Available.".format(username_prefix, username))
         else:
             await bot.say("Error! *{}*".format(req.status_code))
-    elif network == "instagram":
-        url = 'https://www.instagram.com/'
-        req = requests.get(url + username)
-        if req.status_code == 200:
-            embed = discord.Embed(title="Instagram Request", color=0xbc2a8d)
-            embed.add_field(name="Username", value="{}".format(username))
-            embed.add_field(name="Status", value="Not Available")
-            await bot.say(embed=embed)
-        elif req.status_code == 404:
-            embed = discord.Embed(title="Instagram Request", color=0xbc2a8d)
-            embed.add_field(name="Username", value="{}".format(username))
-            embed.add_field(name="Status", value="Available")
-            await bot.say(embed=embed)
-        else:
-            await bot.say("Error! *{}*".format(req.status_code))
-    elif network == "youtube":
-        url = 'https://www.youtube.com/'
-        req = requests.get(url + username)
-        if req.status_code == 200:
-            embed = discord.Embed(title="YouTube Request", color=0xff0000)
-            embed.add_field(name="Username", value="{}".format(username))
-            embed.add_field(name="Status", value="Not Available")
-            await bot.say(embed=embed)
-        elif req.status_code == 404:
-            embed = discord.Embed(title="YouTube Request", color=0xff0000)
-            embed.add_field(name="Username", value="{}".format(username))
-            embed.add_field(name="Status", value="Available")
-            await bot.say(embed=embed)
-        else:
-            await bot.say("Error! *{}*".format(req.status_code))
-    else:
-        await bot.say("Sorry, that social media is currently not supported.")
+    except Exception as e:
+        await bot.say(":warning: **Critial error!**  \n{}".format(e))
 
 @kitsune.error
 async def kitsune_error(error, ctx):
