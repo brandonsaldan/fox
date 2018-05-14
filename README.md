@@ -1,11 +1,9 @@
 # KitsuneDiscord
 
-A Python Instagram username scraper. Originally created by 4201337, updated to run on Python 3 by me, ported as a Discord bot by /u/exofeel.
+A social media username scraper made for use as a Discord bot.
 
------
-
-
-**These instructions are for Windows and should work on macOS as well. Linux instructions may come in the future.**
+**Installation on Windows and macOS**
+--------------
 
 1. Download this project as a .zip
 2. Unzip to a directory of your choice
@@ -13,16 +11,39 @@ A Python Instagram username scraper. Originally created by 4201337, updated to r
 4. Get bot token from Discord
 5. Replace bot.run with your token
 6. `cd` to the directory you installed Kitsune to
-7. run `python3 KitsuneDiscord.py`
+7. run `python KitsuneDiscord.py`
 
-KitsuneDiscord currently supports both Instagram, and Twitter usernames.
+**Usage**
+--------------
 
-To use KitsuneDiscord, enter `%kitsune SocialMediaName Username`, with `SocialMediaName` being either `Instagram`, or `Twitter`, and `Username` being the username you wish to check.
+KitsuneDiscord's default prefix is `%`. The correct syntax is `%kitsune (social media) (username)`
 
 If done correctly, KitsuneDiscord will instantly check if the provided username is taken.
 
-When a user gets banned or deactivates their account, the username they had will still show up as available, but will not be able to be set as a username.
+On certain social medias, for example, Instagram, if a user gets banned or deactivates their account, the username they had will still show up as available, but will not be able to be set as a username.
 
 Batch .txt support coming soon.
 
 I am not responsible for any damage or unwanted consequences this application may cause. By using this application you assume complete responsibility.  
+
+**KitsuneDiscord currently supports:**
+--------------
+
+- Instagram
+
+- Twitter
+
+- YouTube
+
+**Credits**
+--------------
+
+4201337
+
+exofeel
+
+clemente
+
+padraig
+
+brensalsa
