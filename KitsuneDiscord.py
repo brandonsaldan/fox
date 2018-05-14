@@ -73,11 +73,14 @@ async def kitsune(ctx, network, username):
     else:
         await bot.say("Sorry, that social media is currently not supported.")
 
-@kitsune.error
-async def kitsune_error(error, ctx):
+@bot.event
+async def on_command_error(error, ctx):
     if isinstance(error, discord.ext.commands.MissingRequiredArgument):
         userID = (ctx.message.author.id)
         await bot.send_message(ctx.message.channel,"<@%s>: **Please provide a social media and/or a username.**" % (userID))
         await bot.delete_message(ctx.message)
+    elif isinstance(error, discord.ext.commands.errors.CommandOnCooldown):
+        userID = (ctx.message.author.id)
+        await bot.send_message(ctx.message.channel, "{} You're doing that too fast, please slow down.".format(ctx.message.author.mention))
 
 bot.run('insert bot token here')
