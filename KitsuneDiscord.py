@@ -22,6 +22,7 @@ async def on_ready():
     print("Kitsune is ready.")
 
 @bot.command(pass_context=True)
+@commands.cooldown(1, 10, commands.BucketType.user)
 async def kitsune(ctx, network, username):
     if network == "twitter":
         url = 'https://www.twitter.com/'
