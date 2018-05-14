@@ -37,21 +37,23 @@ async def on_ready():
     await bot.change_presence(game=discord.Game(name='Prefix: %'.format(number_of_servers)))
 
 @bot.command(pass_context=True)
-async def help(ctx):
+async def kitsune_help(ctx):
     embed = discord.Embed(title="Kitsune is a simple discord bot that can do social network scraping!", colour=discord.Colour(0xffb25d), description="Please read fully all commands.", timestamp=datetime.datetime.utcfromtimestamp(1526316493))
 
-    embed.set_image()
-    embed.set_thumbnail()
+#embed.set_image()
+#embed.set_thumbnail()
     embed.set_author(name="Kitsune Help Command")
     embed.set_footer(text="Kitsune")
 
     embed.add_field(name="Default Prefix", value="the prefix currently is %. We will add support for changing the prefix in chat. However you can change the prefix in the source code.")
     embed.add_field(name="%kitsune", value="Usage: \n```%kitsune [network] [username]``` \nThe current supported social networks are \n\n-Reddit\n-Instagram\n-Twitter\n- and YouTube.\n")
     embed.add_field(name="%batch", value="Kitsune can do batches of usernames inside a .txt file. Please. Seperate each username with a different line. Any other can break the bot and make the social network think weirdly about future requests.\n\nUsage:\n```%batch [network] [url to .txt file]```")
-    embed.add_field(name="Have a suggestion?", value="Contact the developers on discord!", inline=True)
+    embed.add_field(name="Have a suggestion?", value="**u/exofeel**\n\n**Garrett#8026**\n\n**/u/lafterr**\n\n**Padraig#1020**", inline=True)
     embed.add_field(name="Donate?", value="Sure we take cypto.\n \n**VTC**:*VhYdqgeBmudv3wuDwNB4VhuQzNjK3Rw9n7* \n**ETH**:*0x6CC93E2E2D4dd0430Bab5d8Bb71a395090B84026*", inline=True)
 
     await bot.say(embed=embed)
+
+    #await bot.say("fuck you.")
 
 @bot.command(pass_context=True)
 async def batch(ctx, network, url, force="false"):
@@ -176,7 +178,7 @@ async def kitsune(ctx, network, username):
                     embed.add_field(name="Username", value="{}".format(username_prefix + username))
                     embed.add_field(name="Status", value="Available")
                     await bot.say(embed=embed)
-             else:
+            else:
                 await bot.say("Error! *{}*".format(req.status_code))
         except Exception as e:
             await bot.say(":warning: **Critial error!**  \n{}".format(e))
@@ -195,4 +197,4 @@ async def on_command_error(error, ctx):
         userID = (ctx.message.author.id)
         await bot.send_message(ctx.message.channel, "{} :snowflake You're on cooldown.".format(ctx.message.author.mention))
 
-bot.run('insert bot token here')
+bot.run('bot token')
