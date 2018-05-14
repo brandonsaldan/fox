@@ -12,7 +12,7 @@ import datetime
 import os
 
 
-bot = commands.Bot(command_prefix='*')
+bot = commands.Bot(command_prefix='%')
 
 
 #myLock = LockPool()
@@ -58,6 +58,7 @@ async def kitsune_help(ctx):
 @bot.command(pass_context=True)
 async def batch(ctx, network, url, force="false"):
     r = requests.get(url)
+    network = network.lowercase()
     #usernames = []
     f = open('temp.txt', 'w+')
     f.write(r.text)
@@ -144,6 +145,7 @@ async def kitsune(ctx, network, username):
             social_url = social_networks[network]
             req = requests.get(social_url + username, headers = {'User-agent': 'Kitsune username checker'})
             username_prefix = social_network_prefix[network]
+            network = network.lower()
             if req.status_code == 200:
                 #await bot.say("{}{} is unavailable.".format(username_prefix, username))
                 if network == "twitter":
