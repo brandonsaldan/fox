@@ -31,7 +31,7 @@ async def kitsune(ctx, network, username):
         if req.status_code == 200:
             embed = discord.Embed(title="Twitter Request", color=0x00aced)
             embed.add_field(name="Username", value="{}".format(username))
-            embed.add_field(name="Status", value="Not Available")
+            embed.add_field(name="Status", value="Unavailable")
             await bot.say(embed=embed)
         elif req.status_code == 404:
             embed = discord.Embed(title="Twitter Request", color=0x00aced)
@@ -46,7 +46,7 @@ async def kitsune(ctx, network, username):
         if req.status_code == 200:
             embed = discord.Embed(title="Instagram Request", color=0xbc2a8d)
             embed.add_field(name="Username", value="{}".format(username))
-            embed.add_field(name="Status", value="Not Available")
+            embed.add_field(name="Status", value="Unavailable")
             await bot.say(embed=embed)
         elif req.status_code == 404:
             embed = discord.Embed(title="Instagram Request", color=0xbc2a8d)
@@ -61,7 +61,7 @@ async def kitsune(ctx, network, username):
         if req.status_code == 200:
             embed = discord.Embed(title="YouTube Request", color=0xff0000)
             embed.add_field(name="Username", value="{}".format(username))
-            embed.add_field(name="Status", value="Not Available")
+            embed.add_field(name="Status", value="Unavailable")
             await bot.say(embed=embed)
         elif req.status_code == 404:
             embed = discord.Embed(title="YouTube Request", color=0xff0000)
