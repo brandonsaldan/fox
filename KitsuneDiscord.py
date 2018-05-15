@@ -12,7 +12,7 @@ import datetime
 import os
 
 
-bot = commands.Bot(command_prefix='*')
+bot = commands.Bot(command_prefix='%')
 
 
 #myLock = LockPool()
