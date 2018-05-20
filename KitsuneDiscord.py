@@ -33,6 +33,7 @@ social_network_prefix = {"instagram": "@", "twitter": "@", "youtube": " ", "redd
 @bot.event
 async def on_ready():
     print("Kitsune is ready.")
+    print("----------------------")
     number_of_servers = len(bot.servers)
     await bot.change_presence(game=discord.Game(name='Prefix: %'.format(number_of_servers)))
 
