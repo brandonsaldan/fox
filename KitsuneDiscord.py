@@ -180,7 +180,7 @@ async def kitsune(ctx, network, username):
             else:
                 await bot.say("Error! *{}*".format(req.status_code))
         except Exception as e:
-            await bot.say(":warning: **Critial error!**  \n{}".format(e))
+            await bot.say(":warning: **Critical error!**  \n{}".format(e))
     except CommandOnCooldown as p:
         await bot.say("{}".format(p))
 
