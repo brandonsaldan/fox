@@ -39,6 +39,8 @@ async def on_ready():
 
 @bot.command(pass_context=True)
 async def kitsune_help(ctx):
+    print("Help command recieved.")
+    print("----------------------")
     embed = discord.Embed(title="Kitsune is a simple social media username scraping Discord bot.", colour=discord.Colour(0xffb25d), description="Please fully read all commands.", timestamp=datetime.datetime.utcfromtimestamp(1526316493))
 
 #embed.set_image()
@@ -67,6 +69,8 @@ async def batch(ctx, network, url, force="false"):
         if force == "true":
             if username_count >= 999:
                 await bot.say("I'm sorry, but 75 usernames is the limit.\nPlease remove some before continuing.")
+                print("Batch error - Too many usernames given.")
+                print("----------------------")
             else:
                 pass   
         else:
@@ -114,16 +118,24 @@ async def batch(ctx, network, url, force="false"):
                         if network == "instagram":
                             embed = discord.Embed(title="Instagram Username Scraper", colour=discord.Colour(0xfe139e), description="A total number of {} were scraped.".format(len(usernames)), timestamp=datetime.datetime.utcfromtimestamp(1526305073))
                             embed.set_thumbnail(url="https://instagram-brand.com/wp-content/uploads/2016/11/app-icon2.png")
+                            print("Instagram batch request recieved.")
+                            print("----------------------")
                             pass
                         elif network == "twitter":
                             embed = discord.Embed(title="Twitter Username Scraper", colour=discord.Colour(0x20c0eb), description="A total number of {} were scraped.".format(len(usernames)), timestamp=datetime.datetime.utcfromtimestamp(1526305073))
                             embed.set_thumbnail(url="http://logos-download.com/wp-content/uploads/2016/02/Twitter_logo_bird_transparent_png-700x568.png")
+                            print("Twitter batch request recieved.")
+                            print("----------------------")
                             pass
                         elif network == "reddit":
                             embed = discord.Embed(title="Reddit Username Scraper", colour=discord.Colour(0xf08a0d), description="A total number of {} were scraped.".format(len(usernames)), timestamp=datetime.datetime.utcfromtimestamp(1526305073))
-                            embed.set_thumbnail(url="https://is5-ssl.mzstatic.com/image/thumb/Purple125/v4/36/b8/a9/36b8a9e3-55ff-d52c-ea7e-974414f925f0/source/100x100bb.jpg")                         
+                            embed.set_thumbnail(url="https://is5-ssl.mzstatic.com/image/thumb/Purple125/v4/36/b8/a9/36b8a9e3-55ff-d52c-ea7e-974414f925f0/source/100x100bb.jpg")
+                            print("Reddit batch request recieved.")
+                            print("----------------------")                         
                         else:
                             await bot.say("Error")
+                            print("Error.")
+                            print("----------------------")
                         embed.set_footer(text="Kitsune Username Scraper")
 
                         embed.add_field(name="Available names ✅", value="{}".format(available_names))
@@ -134,6 +146,8 @@ async def batch(ctx, network, url, force="false"):
                     os.remove(temp.txt)
             except Exception as e:
                 await bot.say(":warning: Critical Error! {}".format(e))
+                print("Critical error.")
+                print("----------------------")
 
 @bot.command(pass_context=True)
 @commands.cooldown(1, 10, commands.BucketType.user)
