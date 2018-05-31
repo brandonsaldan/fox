@@ -164,16 +164,22 @@ async def kitsune(ctx, network, username):
                     embed.add_field(name="Username", value="{}".format(username_prefix + username))
                     embed.add_field(name="Status", value="Unavailable")
                     await bot.say(embed=embed)
+                    print("Twitter request recieved. Input is unavailable.")
+                    print("----------------------")
                 elif network == "instagram":
                     embed = discord.Embed(title="Instagram Request", color=0xfe139e)
                     embed.add_field(name="Username", value="{}".format(username_prefix + username))
                     embed.add_field(name="Status", value="Unavailable")
                     await bot.say(embed=embed)
+                    print("Instagram request recieved. Input is unavailable.")
+                    print("----------------------")
                 elif network == "reddit":
                     embed = discord.Embed(title="Reddit Request", color=0xf08a0d)
                     embed.add_field(name="Username", value="{}".format(username_prefix + username))
                     embed.add_field(name="Status", value="Unavailable")
                     await bot.say(embed=embed)
+                    print("Reddit request recieved. Input is unavailable.")
+                    print("----------------------")
             elif req.status_code == 404:
                 #await bot.say("{}{} is Available.".format(username_prefix, username))
                 if network == "twitter":
@@ -181,20 +187,30 @@ async def kitsune(ctx, network, username):
                     embed.add_field(name="Username", value="{}".format(username_prefix + username))
                     embed.add_field(name="Status", value="Available")
                     await bot.say(embed=embed)
+                    print("Twitter request recieved. Input is available.")
+                    print("----------------------")
                 elif network == "instagram":
                     embed = discord.Embed(title="Instagram Request", color=0xfe139e)
                     embed.add_field(name="Username", value="{}".format(username_prefix + username))
                     embed.add_field(name="Status", value="Available")
                     await bot.say(embed=embed)
+                    print("Instagram request recieved. Input is available.")
+                    print("----------------------")
                 elif network == "reddit":
                     embed = discord.Embed(title="Reddit Request", color=0xf08a0d)
                     embed.add_field(name="Username", value="{}".format(username_prefix + username))
                     embed.add_field(name="Status", value="Available")
                     await bot.say(embed=embed)
+                    print("Reddit request recieved. Input is available.")
+                    print("----------------------")
             else:
                 await bot.say("Error! *{}*".format(req.status_code))
+                print("Error.")
+                print("----------------------")
         except Exception as e:
             await bot.say(":warning: **Critical error!**  \n{}".format(e))
+            print("Critical error.")
+            print("----------------------")
     except CommandOnCooldown as p:
         await bot.say("{}".format(p))
 
@@ -206,8 +222,12 @@ async def on_command_error(error, ctx):
         userID = (ctx.message.author.id)
         await bot.send_message(ctx.message.channel,"<@%s>: **Please provide a social media and/or a username.**" % (userID))
         await bot.delete_message(ctx.message)
+        print("Error - No social media given.")
+        print("----------------------")
     elif isinstance(error, discord.ext.commands.errors.CommandOnCooldown):
         userID = (ctx.message.author.id)
         await bot.send_message(ctx.message.channel, "{} You're doing that too fast, please slow down.".format(ctx.message.author.mention))
+        print("Cooldown message displayed.")
+        print("----------------------")
 
 bot.run('bot token')
