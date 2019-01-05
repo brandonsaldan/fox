@@ -51,7 +51,7 @@ async def kitsune_help(ctx):
     embed.add_field(name="Default prefix", value="The default prefix is currently %. We will add support for changing the prefix in chat, however you can change the prefix in the source code.")
     embed.add_field(name="%kitsune", value="Usage: \n```%kitsune [platform] [username]``` \nThe current supported social networks are: \n\n-Reddit\n-Instagram\n-Twitter\n-YouTube\n")
     embed.add_field(name="%batch", value="Kitsune can do batches of usernames inside a .txt file. Please seperate each username into it's own line. Any other format can break the bot and make the social network think weirdly about future requests.\n\nUsage:\n```%batch [network] [url to .txt file]```")
-    embed.add_field(name="Have a suggestion?", value="**u/exofeel**\n\n**Garrett#8026**\n\n**/u/lafterr**\n\n**Padraig#1020**", inline=True)
+    embed.add_field(name="Have a suggestion?", value="**u/exofeel**\n\n**bren#8026**\n\n**/u/lafterr**\n\n**Padraig#1020**", inline=True)
     embed.add_field(name="Donations?", value="\n \n**Vertcoin**:*VhYdqgeBmudv3wuDwNB4VhuQzNjK3Rw9n7* \n**Ethereum**:*0x6CC93E2E2D4dd0430Bab5d8Bb71a395090B84026*", inline=True)
 
     await bot.say(embed=embed)
