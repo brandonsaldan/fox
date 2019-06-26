@@ -11,24 +11,14 @@ import urllib.request
 import datetime
 import os
 
+from os import listdir
+from os.path import isfile, join
+
+from discord.ext import commands
+import logging
+import traceback
 
 bot = commands.Bot(command_prefix='%')
-
-
-#myLock = LockPool()
-#myPool = ThreadPool(myThreads)
-
-
-
-
-number_of_servers = len(bot.servers)
-#current_server = await bot.change_presence(game=discord.Game(name='servers: {}'.format(number_of_servers)))
-
-
-
-social_networks = {"instagram": "https://www.instagram.com/", "twitter": "https://www.twitter.com/", "youtube": "https://www.youtube.com/", "reddit": "https://www.reddit.com/user/"}
-social_network_prefix = {"instagram": "@", "twitter": "@", "youtube": " ", "reddit": "/u/"}
-
 
 @bot.event
 async def on_ready():
@@ -56,10 +46,13 @@ async def kitsune_help(ctx):
 
     await bot.say(embed=embed)
 
+number_of_servers = len(bot.servers)
+social_networks = {"instagram": "https://www.instagram.com/", "twitter": "https://www.twitter.com/", "reddit": "https://www.reddit.com/user/"}
+social_network_prefix = {"instagram": "@", "twitter": "@", "reddit": "/u/"}
+
 @bot.command(pass_context=True)
 async def batch(ctx, network, url, force="false"):
     r = requests.get(url)
-    network = network.lowercase()
     #usernames = []
     f = open('temp.txt', 'w+')
     f.write(r.text)
@@ -69,7 +62,7 @@ async def batch(ctx, network, url, force="false"):
         username_count = len(usernames)
         if force == "true":
             if username_count >= 999:
-                await bot.say("I'm sorry, but 75 usernames is the limit.\nPlease remove some before continuing.")
+                await bot.say("I'm sorry, but 75 usernames is the limit. Please remove some before continuing.")
                 print("Batch error - Too many usernames given.")
                 print("----------------------")
             else:
@@ -132,11 +125,11 @@ async def batch(ctx, network, url, force="false"):
                             embed = discord.Embed(title="Reddit Username Scraper", colour=discord.Colour(0xf08a0d), description="A total number of {} were scraped.".format(len(usernames)), timestamp=datetime.datetime.utcfromtimestamp(1526305073))
                             embed.set_thumbnail(url="https://is5-ssl.mzstatic.com/image/thumb/Purple125/v4/36/b8/a9/36b8a9e3-55ff-d52c-ea7e-974414f925f0/source/100x100bb.jpg")
                             print("Reddit batch request recieved.")
-                            print("----------------------")                         
+                            print("----------------------")        
                         else:
                             await bot.say("Error")
                             print("Error.")
-                            print("----------------------")
+                            print("----------------------") 
                         embed.set_footer(text="Kitsune Username Scraper")
 
                         embed.add_field(name="Available names ✅", value="{}".format(available_names))
@@ -144,92 +137,46 @@ async def batch(ctx, network, url, force="false"):
                         embed.add_field(name="Names that returned an error :warning:", value="{}".format(error_names))
                         await bot.edit_message(message, embed=embed)
                     await bot.say("Done scraping ✅")
-                    os.remove(temp.txt)
             except Exception as e:
                 await bot.say(":warning: Critical Error! {}".format(e))
                 print("Critical error.")
                 print("----------------------")
 
 @bot.command(pass_context=True)
-@commands.cooldown(1, 10, commands.BucketType.user)
-async def kitsune(ctx, network, username):
-    try:
+async def reload_all(ctx):
+        if ctx.message.author.id == "261953350860275713":
+            # Loading
+            for extension in [f.replace('.py', "") for f in listdir("cogs") if isfile(join("cogs", f))]:
+                try:
+                    if not "__init__" in extension:
+                        print("Reloading {}...".format(extension))
+                        bot.unload_extension("cogs." + extension)
+                        loadingCogMessage = await bot.say("Loading {}..".format(extension))
+                        bot.load_extension("cogs." + extension)
+                        await bot.edit_message(loadingCogMessage, "✅ | {} has been loaded.".format(extension))
+                except Exception as e:
+                    print("Failed to load cog {}".format(extension))
+                    await bot.say("⛔️ | Failed to load cog {}".format(extension))
+                    traceback.print_exc()
+        else:
+            print("Unauthorized user has attempted to reload modules.. Stopped :)")
+            await bot.say("⛔️ | Bot owner only!")
+
+async def LoadCogs():
+    for extension in [f.replace('.py', "") for f in listdir("cogs") if isfile(join("cogs", f))]:
         try:
-            social_url = social_networks[network]
-            req = requests.get(social_url + username, headers = {'User-agent': 'Kitsune Username Scraper'})
-            username_prefix = social_network_prefix[network]
-            network = network.lower()
-            if req.status_code == 200:
-                #await bot.say("{}{} is unavailable.".format(username_prefix, username))
-                if network == "twitter":
-                    embed = discord.Embed(title="Twitter Request", color=0x20c0eb)
-                    embed.add_field(name="Username", value="{}".format(username_prefix + username))
-                    embed.add_field(name="Status", value="Unavailable")
-                    await bot.say(embed=embed)
-                    print("Twitter request recieved. Input is unavailable.")
-                    print("----------------------")
-                elif network == "instagram":
-                    embed = discord.Embed(title="Instagram Request", color=0xfe139e)
-                    embed.add_field(name="Username", value="{}".format(username_prefix + username))
-                    embed.add_field(name="Status", value="Unavailable")
-                    await bot.say(embed=embed)
-                    print("Instagram request recieved. Input is unavailable.")
-                    print("----------------------")
-                elif network == "reddit":
-                    embed = discord.Embed(title="Reddit Request", color=0xf08a0d)
-                    embed.add_field(name="Username", value="{}".format(username_prefix + username))
-                    embed.add_field(name="Status", value="Unavailable")
-                    await bot.say(embed=embed)
-                    print("Reddit request recieved. Input is unavailable.")
-                    print("----------------------")
-            elif req.status_code == 404:
-                #await bot.say("{}{} is Available.".format(username_prefix, username))
-                if network == "twitter":
-                    embed = discord.Embed(title="Twitter Request", color=0x20c0eb)
-                    embed.add_field(name="Username", value="{}".format(username_prefix + username))
-                    embed.add_field(name="Status", value="Available")
-                    await bot.say(embed=embed)
-                    print("Twitter request recieved. Input is available.")
-                    print("----------------------")
-                elif network == "instagram":
-                    embed = discord.Embed(title="Instagram Request", color=0xfe139e)
-                    embed.add_field(name="Username", value="{}".format(username_prefix + username))
-                    embed.add_field(name="Status", value="Available")
-                    await bot.say(embed=embed)
-                    print("Instagram request recieved. Input is available.")
-                    print("----------------------")
-                elif network == "reddit":
-                    embed = discord.Embed(title="Reddit Request", color=0xf08a0d)
-                    embed.add_field(name="Username", value="{}".format(username_prefix + username))
-                    embed.add_field(name="Status", value="Available")
-                    await bot.say(embed=embed)
-                    print("Reddit request recieved. Input is available.")
-                    print("----------------------")
-            else:
-                await bot.say("Error! *{}*".format(req.status_code))
-                print("Error.")
-                print("----------------------")
+            if not "__init__" in extension:
+                print("Loading {}...".format(extension))
+                bot.load_extension("cogs." + extension)
         except Exception as e:
-            await bot.say(":warning: **Critical error!**  \n{}".format(e))
-            print("Critical error.")
-            print("----------------------")
-    except CommandOnCooldown as p:
-        await bot.say("{}".format(p))
+            print("Failed to load cog {}".format(extension))
+            traceback.print_exc()
 
 
+def Main():
+    logging.basicConfig(level=logging.INFO)
 
-@bot.event
-async def on_command_error(error, ctx):
-    if isinstance(error, discord.ext.commands.MissingRequiredArgument):
-        userID = (ctx.message.author.id)
-        await bot.send_message(ctx.message.channel,"<@%s>: **Please provide a social media and/or a username.**" % (userID))
-        await bot.delete_message(ctx.message)
-        print("Error - No social media given.")
-        print("----------------------")
-    elif isinstance(error, discord.ext.commands.errors.CommandOnCooldown):
-        userID = (ctx.message.author.id)
-        await bot.send_message(ctx.message.channel, "{} You're doing that too fast, please slow down.".format(ctx.message.author.mention))
-        print("Cooldown message displayed.")
-        print("----------------------")
+if __name__ == '__main__':
+    Main()
 
-bot.run('bot token')
+bot.run('')
