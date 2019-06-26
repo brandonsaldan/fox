@@ -39,7 +39,7 @@ async def kitsune_help(ctx):
     embed.set_footer(text="Kitsune")
 
     embed.add_field(name="Default prefix", value="The default prefix is currently %. We will add support for changing the prefix in chat, however you can change the prefix in the source code.")
-    embed.add_field(name="%kitsune", value="Usage: \n```%kitsune [platform] [username]``` \nThe current supported social networks are: \n\n-Reddit\n-Instagram\n-Twitter\n-YouTube\n")
+    embed.add_field(name="%kitsune", value="Usage: \n```%kitsune [platform] [username]``` \nThe current supported social networks are: \n\n-Reddit\n-Instagram\n-Twitter\n-SoundCloud\n")
     embed.add_field(name="%batch", value="Kitsune can do batches of usernames inside a .txt file. Please seperate each username into it's own line. Any other format can break the bot and make the social network think weirdly about future requests.\n\nUsage:\n```%batch [network] [url to .txt file]```")
     embed.add_field(name="Have a suggestion?", value="**u/exofeel**\n\n**bren#8026**\n\n**/u/lafterr**\n\n**Padraig#1020**", inline=True)
     embed.add_field(name="Donations?", value="\n \n**Vertcoin**:*VhYdqgeBmudv3wuDwNB4VhuQzNjK3Rw9n7* \n**Ethereum**:*0x6CC93E2E2D4dd0430Bab5d8Bb71a395090B84026*", inline=True)
@@ -47,8 +47,8 @@ async def kitsune_help(ctx):
     await bot.say(embed=embed)
 
 number_of_servers = len(bot.servers)
-social_networks = {"instagram": "https://www.instagram.com/", "twitter": "https://www.twitter.com/", "reddit": "https://www.reddit.com/user/"}
-social_network_prefix = {"instagram": "@", "twitter": "@", "reddit": "/u/"}
+social_networks = {"instagram": "https://www.instagram.com/", "twitter": "https://www.twitter.com/", "reddit": "https://www.reddit.com/user/", "soundcloud": "https://soundcloud.com/"}
+social_network_prefix = {"instagram": "@", "twitter": "@", "reddit": "/u/", "soundcloud": ""}
 
 @bot.command(pass_context=True)
 async def batch(ctx, network, url, force="false"):
@@ -125,6 +125,11 @@ async def batch(ctx, network, url, force="false"):
                             embed = discord.Embed(title="Reddit Username Scraper", colour=discord.Colour(0xf08a0d), description="A total number of {} were scraped.".format(len(usernames)), timestamp=datetime.datetime.utcfromtimestamp(1526305073))
                             embed.set_thumbnail(url="https://is5-ssl.mzstatic.com/image/thumb/Purple125/v4/36/b8/a9/36b8a9e3-55ff-d52c-ea7e-974414f925f0/source/100x100bb.jpg")
                             print("Reddit batch request recieved.")
+                            print("----------------------")
+                        elif network == "soundcloud":
+                            embed = discord.Embed(title="SoundCloud Username Scraper", colour=discord.Colour(0xff8800), description="A total number of {} were scraped.".format(len(usernames)), timestamp=datetime.datetime.utcfromtimestamp(1526305073))
+                            embed.set_thumbnail(url="http://icons.iconarchive.com/icons/danleech/simple/1024/soundcloud-icon.png")
+                            print("SoundCloud batch request recieved.")
                             print("----------------------")        
                         else:
                             await bot.say("Error")

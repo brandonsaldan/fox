@@ -8,8 +8,8 @@ import os
 from discord.ext import commands
 from discord.ext.commands import Bot
 
-social_networks = {"instagram": "https://www.instagram.com/", "twitter": "https://www.twitter.com/", "reddit": "https://www.reddit.com/user/",}
-social_network_prefix = {"instagram": "@", "twitter": "@", "reddit": "/u/",}
+social_networks = {"instagram": "https://www.instagram.com/", "twitter": "https://www.twitter.com/", "reddit": "https://www.reddit.com/user/", "soundcloud": "https://soundcloud.com/"}
+social_network_prefix = {"instagram": "@", "twitter": "@", "reddit": "/u/", "soundcloud": ""}
 
 bot = commands.Bot(command_prefix='%')
 
@@ -49,6 +49,13 @@ class Scrape(object):
                         await self.bot.say(embed=embed)
                         print("Reddit request recieved. Input is unavailable.")
                         print("----------------------")
+                    elif network == "soundcloud":
+                        embed = discord.Embed(title="SoundCloud Request", color=0xff8800)
+                        embed.add_field(name="Username", value="{}".format(username_prefix + username))
+                        embed.add_field(name="Status", value="Available")
+                        await self.bot.say(embed=embed)
+                        print("SoundCloud request recieved. Input is available.")
+                        print("----------------------")
                 elif req.status_code == 404:
                     #await self.bot.say("{}{} is Available.".format(username_prefix, username))
                     if network == "twitter":
@@ -71,6 +78,13 @@ class Scrape(object):
                         embed.add_field(name="Status", value="Available")
                         await self.bot.say(embed=embed)
                         print("Reddit request recieved. Input is available.")
+                        print("----------------------")
+                    elif network == "soundcloud":
+                        embed = discord.Embed(title="SoundCloud Request", color=0xff8800)
+                        embed.add_field(name="Username", value="{}".format(username_prefix + username))
+                        embed.add_field(name="Status", value="Available")
+                        await self.bot.say(embed=embed)
+                        print("SoundCloud request recieved. Input is available.")
                         print("----------------------")
                 else:
                     await self.bot.say("Error! *{}*".format(req.status_code))
